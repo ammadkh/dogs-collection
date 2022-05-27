@@ -9,11 +9,10 @@ export const DogsProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   const fetchDogs = async () => {
-    setIsLoading(true);
     setError(null);
     try {
       const response = await axios.get(
-        "https://dog.ceo/api/breeds/image/random/9"
+        "https://dog.ceo/api/breeds/image/random/12"
       );
       setDogs((prevDogs) => [
         ...new Set([...prevDogs, ...response.data.message]),
@@ -25,6 +24,7 @@ export const DogsProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     fetchDogs();
   }, []);
   return (

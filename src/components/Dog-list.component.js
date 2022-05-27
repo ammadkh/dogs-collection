@@ -2,6 +2,8 @@ import React, { useRef, useCallback, useContext } from "react";
 import { CollectionContext } from "../services/collection.context";
 import { DogsContext } from "../services/dogs.context";
 import { MdBookmark } from "react-icons/md";
+import Dots from "react-activity/dist/Dots";
+import "react-activity/dist/Dots.css";
 
 export const DogList = ({ dogs, isCollection = false }) => {
   const { addToCollection, collection } = useContext(CollectionContext);
@@ -36,7 +38,17 @@ export const DogList = ({ dogs, isCollection = false }) => {
     );
   }
 
-  if (!dogs.length) {
+  if (loading) {
+    return (
+      <div className="flex justify-center h-screen">
+        <p className="m-auto text-xl">
+          <Dots />
+        </p>
+      </div>
+    );
+  }
+
+  if (!dogs.length && !loading) {
     return (
       <div className="flex justify-center h-screen">
         <p className="m-auto text-xl">NO DATA FOUND.</p>
@@ -45,14 +57,13 @@ export const DogList = ({ dogs, isCollection = false }) => {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
       {dogs?.map((dog, index) => {
-        console.log(isExist(dog));
         return (
           <div
             onClick={() => addToCollection(dog)}
             key={dog}
-            className="m-10 rounded-2xl overflow-hidden w-80 h-80 flex bg-slate-100 relative border-2 border-black"
+            className="m-10 rounded-2xl overflow-hidden flex bg-slate-100 relative border-2 border-black w-52 h-52"
           >
             {isExist(dog) && (
               <div className="w-auto rounded-full absolute right-3 top-3 bg-white flex justify-center p-2">
